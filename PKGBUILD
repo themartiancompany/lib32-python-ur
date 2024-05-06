@@ -1,10 +1,11 @@
-# Maintainer: Behnam Momeni <sbmomeni [at the] gmail [dot] com>
+# Maintainer: Arzet Ro <arzeth0 [at the] gmail [dot] com>
+# Contributor: Behnam Momeni <sbmomeni [at the] gmail [dot] com>
 # Contributor: Andrew Sun <adsun701@gmail.com>
 
 pkgname=lib32-python
-pkgver=3.11.5
+pkgver=3.12.3
 pkgrel=1
-_pybasever=3.11
+_pybasever=3.12
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')
 license=('custom')
@@ -16,20 +17,16 @@ optdepends=('lib32-sqlite'
             'lib32-tk: for tkinter')
 provides=('lib32-python3')
 source=("https://www.python.org/ftp/python/${pkgver%rc*}/Python-${pkgver}.tar.xz"{,.asc}
-        "lib32-distutils-sysconfig.patch"
         "python-config-32.patch")
-sha512sums=('93fa640bedcea449060caac8aa691aa315a19f172fd9f0422183d17749c3512d4ecac60e7599f9ef14e3cdb3c8b4b060e484c9061b1e7ee8d958200d6041e408'
+sha512sums=('4a2213b108e7f1f1525baa8348e68b2a2336d925e60d0a59f0225fc470768a2c8031edafc0b8243f94dbae18afda335ee5adf2785328c2218fd64cbb439f13a4'
             'SKIP'
-            'b7f06fef88b88463d0d4fb8dea00e1e1c3516bd71d521eb44fa65b2cb70d98d3c468bc12131d76cabbe95f86c96c60e21c0e1b889628de0639c766fd3e0c21b2'
-            'aa6af1208e93aa412e9839721c851dbb463a7e7f40eb72b253eacde2e59569708e1820a6d2fdba1dfee1b475244f47cd40b49204da182e8738058125829a936d')
+            '62bf57ec544fe371cc8bdf7979004bc7a8e226606abcfad6d99ccd4792697dfb3a4e37a59001ae4b3801d55a42fc02c89ffff1d98b9020d245c8ec6d58596052')
 validpgpkeys=('0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D'  # Ned Deily (Python release signing key) <nad@python.org>
               'E3FF2839C048B25C084DEBE9B26995E310250568'  # Łukasz Langa (GPG langa.pl) <lukasz@langa.pl>
               'A035C8C19219BA821ECEA86B64E628F8D684696D') # Pablo Galindo Salgado <pablogsal@gmail.com>
 
 prepare() {
   cd "${srcdir}/Python-${pkgver}"
-  
-  patch -Np1 -i "${srcdir}/lib32-distutils-sysconfig.patch"
   
   # Give the configuration script an extention
   patch -Np1 -i "${srcdir}/python-config-32.patch"
@@ -38,8 +35,6 @@ prepare() {
   sed -i "s|base}/lib|base}/lib32|g" "${srcdir}/Python-${pkgver}/Lib/sysconfig.py"
   sed -i "s|/include|/lib32/python{py_version_short}/include|g" "${srcdir}/Python-${pkgver}/Lib/sysconfig.py"
   sed -i "s|lib/|lib32/|g" "${srcdir}/Python-${pkgver}/Modules/getpath.c"
-  sed -i "s|base/lib|base/lib32|g" "${srcdir}/Python-${pkgver}/Lib/distutils/command/install.py"
-  sed -i "s|/include|/lib32/python{py_version_short}/include|g" "${srcdir}/Python-${pkgver}/Lib/distutils/command/install.py"
   sed -i "s|prefix)/lib|prefix)/lib32|g" "${srcdir}/Python-${pkgver}/Makefile.pre.in"
 
   # FS#23997
@@ -48,7 +43,7 @@ prepare() {
   # Ensure that we are using the system copy of various libraries (expat, zlib, libffi, and libmpdec),
   # rather than copies shipped in the tarball
   rm -r Modules/expat
-  rm -r Modules/_ctypes/{darwin,libffi}*
+  #rm -rf Modules/_ctypes/{darwin,libffi}*
   
   # Currently it is impossible to build multilib system mpdecimal module
   # without conflicting header config errors.
