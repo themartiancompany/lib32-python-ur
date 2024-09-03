@@ -4,7 +4,7 @@
 
 pkgname=lib32-python
 pkgver=3.12.5
-pkgrel=2
+pkgrel=3
 _pybasever=3.12
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')

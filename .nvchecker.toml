@@ -1,4 +1,4 @@
-[python]
+[lib32-python]
 source = "git"
 git = "https://github.com/python/cpython.git"
 prefix = "v"
