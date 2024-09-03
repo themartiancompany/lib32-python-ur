@@ -69,7 +69,6 @@ build() {
               --enable-ipv6 \
               --with-system-expat \
               --with-dbmliborder=gdbm:ndbm \
-              --with-system-ffi \
               --enable-loadable-sqlite-extensions \
               --without-ensurepip \
               --libexecdir=/usr/lib32 \
