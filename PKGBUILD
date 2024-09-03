@@ -3,7 +3,7 @@
 # Contributor: Andrew Sun <adsun701@gmail.com>
 
 pkgname=lib32-python
-pkgver=3.12.3
+pkgver=3.12.5
 pkgrel=1
 _pybasever=3.12
 pkgdesc="Next generation of the python high-level scripting language"
@@ -18,9 +18,9 @@ optdepends=('lib32-sqlite'
 provides=('lib32-python3')
 source=("https://www.python.org/ftp/python/${pkgver%rc*}/Python-${pkgver}.tar.xz"{,.asc}
         "python-config-32.patch")
-sha512sums=('4a2213b108e7f1f1525baa8348e68b2a2336d925e60d0a59f0225fc470768a2c8031edafc0b8243f94dbae18afda335ee5adf2785328c2218fd64cbb439f13a4'
+sha512sums=('7a1c30d798434fe24697bc253f6010d75145e7650f66803328425c8525331b9fa6b63d12a652687582db205f8d4c8279c8f73c338168592481517b063351c921'
             'SKIP'
-            '62bf57ec544fe371cc8bdf7979004bc7a8e226606abcfad6d99ccd4792697dfb3a4e37a59001ae4b3801d55a42fc02c89ffff1d98b9020d245c8ec6d58596052')
+            'da50e8f95a630a48da579b32d06fd778d77c9974445e9eadec3529bb98ad8c3925c86a5786fa5d8072c9ccb70d8d3af71b23b0e5f617a2c4d5b2a21657a30790')
 validpgpkeys=('0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D'  # Ned Deily (Python release signing key) <nad@python.org>
               'E3FF2839C048B25C084DEBE9B26995E310250568'  # Łukasz Langa (GPG langa.pl) <lukasz@langa.pl>
               'A035C8C19219BA821ECEA86B64E628F8D684696D') # Pablo Galindo Salgado <pablogsal@gmail.com>

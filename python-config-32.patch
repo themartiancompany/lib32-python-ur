@@ -1,7 +1,7 @@
-diff -ruN Python-3.12.3/Makefile.pre.in Python-3.12.3.new/Makefile.pre.in
---- Python-3.12.3/Makefile.pre.in	2023-04-05 01:52:17.000000000 +0330
-+++ Python-3.12.3.new/Makefile.pre.in	2023-05-19 09:34:30.419545166 +0330
-@@ -2032,15 +2032,15 @@
+diff -ruN Python-3.12.5/Makefile.pre.in Python-3.12.5.new/Makefile.pre.in
+--- Python-3.12.5/Makefile.pre.in	2023-04-05 01:52:17.000000000 +0330
++++ Python-3.12.5.new/Makefile.pre.in	2023-05-19 09:34:30.419545166 +0330
+@@ -2034,15 +2034,15 @@
  	fi
  	(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(VERSION)$(EXE) python3$(EXE))
  	-if test "$(VERSION)" != "$(LDVERSION)"; then \
@@ -20,7 +20,7 @@ diff -ruN Python-3.12.3/Makefile.pre.in Python-3.12.3.new/Makefile.pre.in
  	-rm -f $(DESTDIR)$(LIBPC)/python3.pc
  	(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(VERSION).pc python3.pc)
  	-rm -f $(DESTDIR)$(LIBPC)/python3-embed.pc
-@@ -2346,12 +2346,12 @@
+@@ -2351,12 +2351,12 @@
  	@ # is not available in configure
  	sed -e "s,@EXENAME@,$(EXENAME)," < $(srcdir)/Misc/python-config.in >python-config.py
  	@ # Replace makefile compat. variable references with shell script compat. ones; $(VAR) -> ${VAR}
@@ -35,7 +35,7 @@ diff -ruN Python-3.12.3/Makefile.pre.in Python-3.12.3.new/Makefile.pre.in
  	fi
  
  
-@@ -2462,7 +2462,7 @@
+@@ -2467,7 +2467,7 @@
  	$(INSTALL_SCRIPT) $(srcdir)/Modules/makesetup $(DESTDIR)$(LIBPL)/makesetup
  	$(INSTALL_SCRIPT) $(srcdir)/install-sh $(DESTDIR)$(LIBPL)/install-sh
  	$(INSTALL_SCRIPT) python-config.py $(DESTDIR)$(LIBPL)/python-config.py
@@ -44,7 +44,7 @@ diff -ruN Python-3.12.3/Makefile.pre.in Python-3.12.3.new/Makefile.pre.in
  	$(INSTALL_SCRIPT) $(SCRIPT_2TO3) $(DESTDIR)$(BINDIR)/2to3-$(VERSION)
  	$(INSTALL_SCRIPT) $(SCRIPT_IDLE) $(DESTDIR)$(BINDIR)/idle$(VERSION)
  	$(INSTALL_SCRIPT) $(SCRIPT_PYDOC) $(DESTDIR)$(BINDIR)/pydoc$(VERSION)
-@@ -2699,7 +2699,7 @@
+@@ -2704,7 +2704,7 @@
  		config.cache config.log pyconfig.h Modules/config.c
  	-rm -rf build platform
  	-rm -rf $(PYTHONFRAMEWORKDIR)
