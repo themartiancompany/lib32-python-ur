@@ -4,7 +4,7 @@
 
 pkgname=lib32-python
 pkgver=3.12.5
-pkgrel=1
+pkgrel=2
 _pybasever=3.12
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')
@@ -23,7 +23,8 @@ sha512sums=('7a1c30d798434fe24697bc253f6010d75145e7650f66803328425c8525331b9fa6b
             'da50e8f95a630a48da579b32d06fd778d77c9974445e9eadec3529bb98ad8c3925c86a5786fa5d8072c9ccb70d8d3af71b23b0e5f617a2c4d5b2a21657a30790')
 validpgpkeys=('0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D'  # Ned Deily (Python release signing key) <nad@python.org>
               'E3FF2839C048B25C084DEBE9B26995E310250568'  # Łukasz Langa (GPG langa.pl) <lukasz@langa.pl>
-              'A035C8C19219BA821ECEA86B64E628F8D684696D') # Pablo Galindo Salgado <pablogsal@gmail.com>
+              'A035C8C19219BA821ECEA86B64E628F8D684696D'  # Pablo Galindo Salgado <pablogsal@gmail.com>
+              '7169605F62C751356D054A26A821E680E5FA6305') # Thomas Wouters <thomas@python.org>
 
 prepare() {
   cd "${srcdir}/Python-${pkgver}"
