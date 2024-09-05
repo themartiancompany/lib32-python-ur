@@ -59,6 +59,9 @@ build() {
   export PKG_CONFIG_PATH='/usr/lib32/pkgconfig'
   export LDFLAGS+=' -m32'
 
+  # No idea why, but when testing in VirtualBox VM, it is `unknown`, so set it to `no`
+  export ax_cv_c_float_words_bigendian=no
+
   # Disable bundled pip & setuptools
   ./configure --prefix=/usr \
               --libdir=/usr/lib32 \
