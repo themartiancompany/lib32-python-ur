@@ -4,7 +4,7 @@
 
 pkgname=lib32-python
 pkgver=3.12.5
-pkgrel=4
+pkgrel=5
 _pybasever=3.12
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')
@@ -61,6 +61,16 @@ build() {
 
   # No idea why, but when testing in VirtualBox VM, it is `unknown`, so set it to `no`
   export ax_cv_c_float_words_bigendian=no
+
+  # Prefer the built-in libb2
+  # in order to avoid accidentally depending on the system lib32-libb2.
+  # Also, the support for bundled and external libb2 is removed in the upcoming Python 3.13:
+  # https://github.com/python/cpython/commit/325e9b8ef400b86fb077aa40d5cb8cec6e4df7bb
+  # Python 3.13 will bundle HACL instead: https://github.com/hacl-star/hacl-star
+  export LIBB2_CFLAGS=' '
+  export LIBB2_LIBS=' '
+  sed -i 's/pkg_cv_LIBB2_CFLAGS="\$LIBB2_CFLAGS"/pkg_failed=yes/' configure
+  sed -i 's/pkg_cv_LIBB2_LIBS="\$LIBB2_LIBS"/pkg_failed=yes/' configure
 
   # Disable bundled pip & setuptools
   ./configure --prefix=/usr \
