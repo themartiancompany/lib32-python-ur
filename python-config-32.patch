@@ -1,7 +1,7 @@
 diff -ruN Python-3.12.5/Makefile.pre.in Python-3.12.5.new/Makefile.pre.in
 --- Python-3.12.5/Makefile.pre.in	2023-04-05 01:52:17.000000000 +0330
 +++ Python-3.12.5.new/Makefile.pre.in	2023-05-19 09:34:30.419545166 +0330
-@@ -2034,15 +2034,15 @@
+@@ -2259,15 +2259,15 @@
  	fi
  	(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(VERSION)$(EXE) python3$(EXE))
  	-if test "$(VERSION)" != "$(LDVERSION)"; then \
@@ -9,10 +9,10 @@ diff -ruN Python-3.12.5/Makefile.pre.in Python-3.12.5.new/Makefile.pre.in
 -		(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(LDVERSION)-config python$(VERSION)-config); \
 +		rm -f $(DESTDIR)$(BINDIR)/python$(VERSION)$(EXE)-config; \
 +		(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(LDVERSION)$(EXE)-config python$(VERSION)$(EXE)-config); \
- 		rm -f $(DESTDIR)$(LIBPC)/python-$(LDVERSION).pc; \
- 		(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(VERSION).pc python-$(LDVERSION).pc); \
- 		rm -f $(DESTDIR)$(LIBPC)/python-$(LDVERSION)-embed.pc; \
- 		(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(VERSION)-embed.pc python-$(LDVERSION)-embed.pc); \
+ 		rm -f $(DESTDIR)$(LIBPC)/python-$(VERSION).pc; \
+ 		(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(LDVERSION).pc python-$(VERSION).pc); \
+ 		rm -f $(DESTDIR)$(LIBPC)/python-$(VERSION)-embed.pc; \
+ 		(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(LDVERSION)-embed.pc python-$(VERSION)-embed.pc); \
  	fi
  	-rm -f $(DESTDIR)$(BINDIR)/python3-config
 -	(cd $(DESTDIR)$(BINDIR); $(LN) -s python$(VERSION)-config python3-config)
@@ -20,7 +20,7 @@ diff -ruN Python-3.12.5/Makefile.pre.in Python-3.12.5.new/Makefile.pre.in
  	-rm -f $(DESTDIR)$(LIBPC)/python3.pc
  	(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(VERSION).pc python3.pc)
  	-rm -f $(DESTDIR)$(LIBPC)/python3-embed.pc
-@@ -2351,12 +2351,12 @@
+@@ -2580,12 +2580,12 @@
  	@ # is not available in configure
  	sed -e "s,@EXENAME@,$(EXENAME)," < $(srcdir)/Misc/python-config.in >python-config.py
  	@ # Replace makefile compat. variable references with shell script compat. ones; $(VAR) -> ${VAR}
@@ -34,22 +34,22 @@ diff -ruN Python-3.12.5/Makefile.pre.in Python-3.12.5.new/Makefile.pre.in
 +		cp python-config.py python$(EXE)-config; \
  	fi
  
- 
-@@ -2467,7 +2467,7 @@
+ # macOS' make seems to ignore a dependency on a
+@@ -2706,7 +2706,7 @@
  	$(INSTALL_SCRIPT) $(srcdir)/Modules/makesetup $(DESTDIR)$(LIBPL)/makesetup
  	$(INSTALL_SCRIPT) $(srcdir)/install-sh $(DESTDIR)$(LIBPL)/install-sh
  	$(INSTALL_SCRIPT) python-config.py $(DESTDIR)$(LIBPL)/python-config.py
 -	$(INSTALL_SCRIPT) python-config $(DESTDIR)$(BINDIR)/python$(LDVERSION)-config
 +	$(INSTALL_SCRIPT) python$(EXE)-config $(DESTDIR)$(BINDIR)/python$(LDVERSION)$(EXE)-config
- 	$(INSTALL_SCRIPT) $(SCRIPT_2TO3) $(DESTDIR)$(BINDIR)/2to3-$(VERSION)
  	$(INSTALL_SCRIPT) $(SCRIPT_IDLE) $(DESTDIR)$(BINDIR)/idle$(VERSION)
  	$(INSTALL_SCRIPT) $(SCRIPT_PYDOC) $(DESTDIR)$(BINDIR)/pydoc$(VERSION)
-@@ -2704,7 +2704,7 @@
- 		config.cache config.log pyconfig.h Modules/config.c
- 	-rm -rf build platform
+ 	@if [ -s Modules/python.exp -a \
+@@ -3000,7 +3000,7 @@
  	-rm -rf $(PYTHONFRAMEWORKDIR)
+ 	-rm -rf iOS/Frameworks
+ 	-rm -rf iOSTestbed.*
 -	-rm -f python-config.py python-config
 +	-rm -f python-config.py python$(EXE)-config
+ 	-rm -rf cross-build
  
  # Make things extra clean, before making a distribution:
- # remove all generated files, even Makefile[.pre]

@@ -3,9 +3,9 @@
 # Contributor: Andrew Sun <adsun701@gmail.com>
 
 pkgname=lib32-python
-pkgver=3.12.5
-pkgrel=5
-_pybasever=3.12
+pkgver=3.13.2
+pkgrel=1
+_pybasever=3.13
 pkgdesc="Next generation of the python high-level scripting language"
 arch=('x86_64')
 license=('custom')
@@ -18,9 +18,9 @@ optdepends=('lib32-sqlite'
 provides=('lib32-python3')
 source=("https://www.python.org/ftp/python/${pkgver%rc*}/Python-${pkgver}.tar.xz"{,.asc}
         "python-config-32.patch")
-sha512sums=('7a1c30d798434fe24697bc253f6010d75145e7650f66803328425c8525331b9fa6b63d12a652687582db205f8d4c8279c8f73c338168592481517b063351c921'
+sha512sums=('bb1c0598914c6d4326554faa568f660f10b20c701d0f36bf1fa58837b6498d728a407416b06ede39604caea1ca93f60545b83b01ae8ee65f55d4cc83242b63fe'
             'SKIP'
-            'da50e8f95a630a48da579b32d06fd778d77c9974445e9eadec3529bb98ad8c3925c86a5786fa5d8072c9ccb70d8d3af71b23b0e5f617a2c4d5b2a21657a30790')
+            '310345634be6b7b1fc26634e3f27ff5c2fb2a224a7fcd7e03cb5dca7ca1a6422238ee0daf239cd57fceee1d6353de97a5b2bf1938051e6b1b1a4e633913059ad')
 validpgpkeys=('0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D'  # Ned Deily (Python release signing key) <nad@python.org>
               'E3FF2839C048B25C084DEBE9B26995E310250568'  # Łukasz Langa (GPG langa.pl) <lukasz@langa.pl>
               'A035C8C19219BA821ECEA86B64E628F8D684696D'  # Pablo Galindo Salgado <pablogsal@gmail.com>
@@ -33,13 +33,10 @@ prepare() {
   patch -Np1 -i "${srcdir}/python-config-32.patch"
   
   # Fix hard-coded paths
-  sed -i "s|base}/lib|base}/lib32|g" "${srcdir}/Python-${pkgver}/Lib/sysconfig.py"
-  sed -i "s|/include|/lib32/python{py_version_short}/include|g" "${srcdir}/Python-${pkgver}/Lib/sysconfig.py"
+  sed -i "s|base}/lib|base}/lib32|g" "${srcdir}/Python-${pkgver}/Lib/sysconfig/__init__.py"
+  sed -i "s|/include|/lib32/python{py_version_short}/include|g" "${srcdir}/Python-${pkgver}/Lib/sysconfig/__init__.py"
   sed -i "s|lib/|lib32/|g" "${srcdir}/Python-${pkgver}/Modules/getpath.c"
   sed -i "s|prefix)/lib|prefix)/lib32|g" "${srcdir}/Python-${pkgver}/Makefile.pre.in"
-
-  # FS#23997
-  sed -i -e "s|^#.* /usr/local/bin/python|#!/usr/bin/python|" Lib/cgi.py
 
   # Ensure that we are using the system copy of various libraries (expat, zlib, libffi, and libmpdec),
   # rather than copies shipped in the tarball
@@ -123,5 +120,5 @@ package() {
 
   # Leave the python binary and configure script for dependants to find the headers
   cd "${pkgdir}"/usr/bin
-  rm pydoc* idle* 2to3*
+  rm pydoc* idle*
 }
