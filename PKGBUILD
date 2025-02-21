@@ -29,6 +29,7 @@
 
 _tk="false"
 _bluez="false"
+_gdbm="false"
 _ml="lib32-"
 _py=python
 _Py="Python"
@@ -47,7 +48,6 @@ url="http://www.${_py}.org"
 depends=(
   "${_ml}expat"
   "${_ml}bzip2"
-  "${_ml}gdbm"
   "${_ml}openssl"
   "${_ml}libffi"
   "${_ml}zlib"
@@ -56,6 +56,11 @@ depends=(
   "${_ml}readline"
   "${_py}"
 )
+if [[ "${_gdbm}" == "true" ]]; then
+  depends+=(
+    "${_ml}gdbm"
+  )
+fi
 makedepends=(
   "${_ml}xz"
   "${_ml}sqlite"
@@ -155,7 +160,6 @@ build() {
     --with-computed-gotos
     --enable-ipv6
     --with-system-expat
-    --with-dbmliborder="gdbm:ndbm"
     --enable-loadable-sqlite-extensions
     # Disable bundled pip & setuptools
     --without-ensurepip
@@ -166,6 +170,11 @@ build() {
     --sbindir="/usr/sbin"
     --with-suffix='-32'
   )
+  if [[ "${_gdbm}" == "true" ]]; then
+    _configure_opts+=(
+      --with-dbmliborder="gdbm:ndbm"
+    )
+  fi
   cd \
     "${srcdir}/${_tarname}"
   export \
