@@ -27,6 +27,8 @@
 # Contributor: Behnam Momeni <sbmomeni [at the] gmail [dot] com>
 # Contributor: Andrew Sun <adsun701@gmail.com>
 
+_tk="false"
+_bluez="false"
 _ml="lib32-"
 _py=python
 _Py="Python"
@@ -55,13 +57,21 @@ depends=(
   "${_py}"
 )
 makedepends=(
-  "${_ml}tk"
   "${_ml}xz"
   "${_ml}sqlite"
-  "${_ml}bluez-libs"
   "${_ml}llvm"
   'valgrind'
 )
+if [[ "${_bluez}" == "true" ]]; then
+  makedepends+=(
+    "${_ml}bluez-libs"
+  )
+fi
+if [[ "${_tk}" == "true" ]]; then
+  makedepends+=(
+    "${_ml}tk"
+  )
+fi
 optdepends=(
   "${_ml}sqlite"
   "${_ml}xz: for lzma"
